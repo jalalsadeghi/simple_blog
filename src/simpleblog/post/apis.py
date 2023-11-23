@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from simpleblog.api.pagination import  LimitOffsetPagination, get_paginated_response_context
 from simpleblog.post.models import  Article
-from simpleblog.post.selectors import article_list
+from simpleblog.post.selectors import article_list, post_detail
 
 
 class ArticleApi(APIView):
@@ -17,19 +17,19 @@ class ArticleApi(APIView):
 
     class OutPutPostSerializer(serializers.ModelSerializer):
         author = serializers.SerializerMethodField("get_author")
-        # url = serializers.SerializerMethodField("get_url")
+        url = serializers.SerializerMethodField("get_url")
 
         class Meta:
             model = Article
-            fields = ("title", "author")    #"url",
+            fields = ("id", "title", "slug", "author", "url",)
 
         def get_author(self, post):
             return post.author.username
 
-        # def get_url(self, post):
-        #     request = self.context.get("request")
-        #     path = reverse("api:post_detail", args=(post.slug,))
-        #     return request.build_absolute_uri(path)
+        def get_url(self, post):
+            request = self.context.get("request")
+            path = reverse("api:post:post_detail", args=(post.id, post.slug,))
+            return request.build_absolute_uri(path)
 
     @extend_schema(
         responses=OutPutPostSerializer,
@@ -51,3 +51,33 @@ class ArticleApi(APIView):
             request=request,
             view=self,
         )
+
+class PostDetailApi(APIView):
+
+    class OutPutPostDetailSerializer(serializers.ModelSerializer):
+        author = serializers.SerializerMethodField("get_author")
+
+        class Meta:
+            model = Article
+            fields = ("id", "author", "slug", "title", "content", "created_at", "updated_at")
+
+        def get_author(self, post):
+            return post.author.username
+
+
+    @extend_schema(
+        responses=OutPutPostDetailSerializer,
+    )
+    def get(self, request, id, slug):
+
+        try:
+            query = post_detail(id=id, slug=slug)
+        except Exception as ex:
+            return Response(
+                {"detail": "Filter Error - " + str(ex)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        serializer = self.OutPutPostDetailSerializer(query)
+
+        return Response(serializer.data)
