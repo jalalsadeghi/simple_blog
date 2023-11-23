@@ -9,6 +9,7 @@ from django.urls import reverse
 from simpleblog.api.pagination import  LimitOffsetPagination, get_paginated_response_context
 from simpleblog.post.models import  Article
 from simpleblog.post.selectors import article_list, post_detail
+from simpleblog.post.services import post_create
 
 
 class ArticleApi(APIView):
@@ -37,7 +38,7 @@ class ArticleApi(APIView):
     def get(self, request):
 
         try:
-            query = article_list()
+            query = article_list().select_related('author')
         except Exception as ex:
             return Response(
                 {"detail": "Filter Error - " + str(ex)},
@@ -81,3 +82,5 @@ class PostDetailApi(APIView):
         serializer = self.OutPutPostDetailSerializer(query)
 
         return Response(serializer.data)
+
+
