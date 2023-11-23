@@ -16,6 +16,7 @@ LOCAL_APPS = [
     'simpleblog.core.apps.CoreConfig',
     'simpleblog.common.apps.CommonConfig',
     'simpleblog.post.apps.PostConfig',
+    'simpleblog.contact.apps.ContactConfig',
 ]
 
 THIRD_PARTY_APPS = [
