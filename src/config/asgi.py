@@ -1,5 +1,5 @@
 """
-ASGI config for tracktrace project.
+ASGI config for simpleblog project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

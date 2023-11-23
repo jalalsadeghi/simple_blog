@@ -1,5 +1,5 @@
 from django.urls import path, include
 
 urlpatterns = [
-    # path('traceapi/', include(('simpleblog.traceapi.urls', 'traceapi')))
+    path('post/', include(('simpleblog.post.urls', 'post')))
 ]

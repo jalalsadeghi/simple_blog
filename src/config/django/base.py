@@ -13,18 +13,14 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 # Application definition
 LOCAL_APPS = [
-    'tracktrace.core.apps.CoreConfig',
-    'tracktrace.common.apps.CommonConfig',
-    'tracktrace.traceapi.apps.TraceapiConfig',
-    'tracktrace.weather.apps.WeatherConfig',
-    'tracktrace.tasks.apps.TasksConfig',
+    'simpleblog.core.apps.CoreConfig',
+    'simpleblog.common.apps.CommonConfig',
+    'simpleblog.post.apps.PostConfig',
 ]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
-    'django_celery_results',
-    'django_celery_beat',
     'corsheaders',
     'drf_spectacular',
     'django_extensions',
@@ -76,24 +72,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='psql://tta:tta123@127.0.0.1:5432/tracktraceapi'),
-}
-DATABASES['default']['ATOMIC_REQUESTS'] = True
-
-if os.environ.get('GITHUB_WORKFLOW'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'github_actions',
-            'USER': 'tta',
-            'PASSWORD': 'tta123',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'simpleblog.sqlite3'
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -129,14 +115,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+
+STATIC_ROOT = 'vol/web/static'
+MEDIA_ROOT = 'vol/web/media'
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'EXCEPTION_HANDLER': 'tracktrace.api.exception_handlers.drf_default_with_modifications_exception_handler',
-    # 'EXCEPTION_HANDLER': 'tracktrace.api.exception_handlers.hacksoft_proposed_exception_handler',
+    'EXCEPTION_HANDLER': 'simpleblog.api.exception_handlers.drf_default_with_modifications_exception_handler',
+    # 'EXCEPTION_HANDLER': 'simpleblog.api.exception_handlers.hacksoft_proposed_exception_handler',
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
@@ -150,9 +142,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 from config.settings.cors import *  # noqa
 from config.settings.sessions import *  # noqa
-from config.settings.celery import *  # noqa
 from config.settings.swagger import *  # noqa
-from config.settings.redis import *  # noqa
 
 from config.settings.debug_toolbar.settings import *  # noqa
 from config.settings.debug_toolbar.setup import DebugToolbarSetup  # noqa

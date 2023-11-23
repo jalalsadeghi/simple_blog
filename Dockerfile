@@ -1,4 +1,7 @@
-FROM jalalsadeghi/docker_base:0.2.1
+FROM python:3.11.4
+
+ENV PYTHONUNBUFFERED 1
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 COPY ./requirements /requirements
 COPY ./scripts /scripts
@@ -7,6 +10,9 @@ COPY ./src /src
 WORKDIR src
 
 EXPOSE 8000
+
+RUN python -m venv /py && \
+    /py/bin/python -m pip install --upgrade pip
 
 RUN /py/bin/pip install -r /requirements/development.txt
 

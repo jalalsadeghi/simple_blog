@@ -1,10 +1,9 @@
-from django.core.exceptions import ImproperlyConfigured
-
 import environ
+from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env()
 
-BASE_DIR = environ.Path(__file__) - 2
+BASE_DIR = environ.Path(__file__) - 1
 
 
 def env_to_enum(enum_cls, value):
