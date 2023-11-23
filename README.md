@@ -54,10 +54,10 @@ cp .env.example .env
 
    - develop environment
 ```
-docker compose -f docker-compose.dev.yml up -d
+docker-compose -f docker-compose.yml up
 ```
    - production environment
 ```
-docker compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.prod.yml up
 ```
 
