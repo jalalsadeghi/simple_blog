@@ -12,11 +12,13 @@ from simpleblog.post.models import  Article
 from simpleblog.post.services import post_create
 
 
-class CreateArticleApi(APIView, ApiAuthMixin):
+class CreateArticleApi(ApiAuthMixin, APIView):
 
     class InputPostSerializer(serializers.Serializer):
         title = serializers.CharField(max_length=100)
         content = serializers.CharField(max_length=1000)
+        is_online = serializers.BooleanField(default=True)
+
 
     class OutPutPostSerializer(serializers.ModelSerializer):
         author = serializers.SerializerMethodField("get_author")
@@ -47,6 +49,7 @@ class CreateArticleApi(APIView, ApiAuthMixin):
                 user=request.user,
                 title=serializer.validated_data.get("title"),
                 content=serializer.validated_data.get("content"),
+                is_online=serializer.validated_data.get("is_online"),
             )
         except Exception as ex:
             return Response(

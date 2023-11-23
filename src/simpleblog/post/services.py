@@ -7,12 +7,13 @@ from django.utils.text import slugify
 
 
 @transaction.atomic
-def post_create(*, user:User, title:str, content:str) -> QuerySet[Article]:
+def post_create(*, user:User, title:str, content:str, is_online:True) -> QuerySet[Article]:
 
     post = Article.objects.create(
-        author  = user,
-        title   = title,
+        author = user,
+        title = title,
         content = content,
-        slug    = slugify(title)
+        slug = slugify(title),
+        is_online = is_online
     )
     return post
