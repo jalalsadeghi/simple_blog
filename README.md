@@ -1,47 +1,62 @@
-# TrackTrace
+# Simple blog
+ 
+## Models
+
+### Blog article:
+   - Contains title, slug (prepopulated from title), content, author (FK to user), publication datetime, and switch to make it online/offline.
+   - This model is added to the admin with the possibility to edit all fields.
+   - The slug field is prepopulated from the title field. This means that when a new article is created, the slug will be automatically generated based on the title.
+   - The publication datetime field is a DateTimeField that stores the date and time when the article was published.
+   - The switch field is a BooleanField that determines whether the article is online or offline.
+
+### Contact request:
+   - Contains email, name, content, and date.
+   - This model is added to the admin without the possibility to add or edit.
+   - Only removal of contact requests is possible.
+
+## Admin
+
+### Article model:
+   - Registered to admin with the possibility to edit all fields.
+   - This means that users can create, update, and delete articles from the admin interface.
+
+### Contact request model:
+   - Added to admin without the possibility to add or edit.
+   - Only removal of contact requests is possible.
+   - This means that users can only delete contact requests from the admin interface.
+
+## Views
+
+### Article list view:
+   - Displays 5 entries on one page with a link to a detail view.
+   - Pagination links are located at the bottom of the list.
+   - This means that users can browse through a large number of articles by clicking on the pagination links.
+
+### Article detail view:
+   - Contains slug and id in the URL.
+   - Displays article details (title, content, full name of the author, publication datetime).
+   - Link to articles list.
+   - This means that users can view each article in detail and then navigate back to the list of articles.
+
+### Contact view:
+   - Displays a form with email, name, and content.
+   - After pressing the "send" button, it stores the entry in the database and sends an email to '' with content, name, and add email address as "Reply-to".
+   - This means that users can send contact requests to the website administrator.
 
 ## project setup
 
-1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
-```
-cd TrackTrace
-```
-
-2- SetUp venv
-```
-python -m venv venv
-source venv/bin/activate
-```
-
-3- install Dependencies
-```
-pip install -r requirements_dev.txt
-```
-
-4- create your env
+1- create your env
 ```
 cp .env.example .env
 ```
 
-5- spin off docker compose
+2- spin off docker compose 
+   1.2- develop environment
 ```
 docker compose -f docker-compose.dev.yml up -d
 ```
-
-6- Create tables
+   2.2- production environment
 ```
-python manage.py migrate
-```
-
-7- run the project
-```
-python manage.py runserver
+docker compose -f docker-compose.yml up -d
 ```
 
-8- Celery and celery beat
-
-```
-  python manage.py setup_periodic_tasks
-  celery -A tracktrace.tasks worker -l info --without-gossip --without-mingle --without-heartbeat
-  celery -A tracktrace.tasks beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-```
