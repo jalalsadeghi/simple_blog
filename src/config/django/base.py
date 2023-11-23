@@ -15,7 +15,6 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 LOCAL_APPS = [
     'simpleblog.core.apps.CoreConfig',
     'simpleblog.common.apps.CommonConfig',
-    'simpleblog.emails.apps.EmailsConfig',
     'simpleblog.post.apps.PostConfig',
     'simpleblog.contact.apps.ContactConfig',
 ]

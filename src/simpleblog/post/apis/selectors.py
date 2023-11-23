@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from simpleblog.api.pagination import  LimitOffsetPagination, get_paginated_response_context
 from simpleblog.post.models import  Article
-from simpleblog.post.selectors import article_list, post_detail
+from simpleblog.post.selectors import article_list, article_detail
 from simpleblog.post.services import post_create
 
 
@@ -72,7 +72,7 @@ class PostDetailApi(APIView):
     def get(self, request, id, slug):
 
         try:
-            query = post_detail(id=id, slug=slug)
+            query = article_detail(id=id, slug=slug)
         except Exception as ex:
             return Response(
                 {"detail": "Filter Error - " + str(ex)},
