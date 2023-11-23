@@ -15,6 +15,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 LOCAL_APPS = [
     'simpleblog.core.apps.CoreConfig',
     'simpleblog.common.apps.CommonConfig',
+    'simpleblog.emails.apps.EmailsConfig',
     'simpleblog.post.apps.PostConfig',
     'simpleblog.contact.apps.ContactConfig',
 ]
@@ -22,6 +23,8 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
+    'django_celery_results',
+    'django_celery_beat',
     'corsheaders',
     'drf_spectacular',
     'django_extensions',
@@ -143,7 +146,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 from config.settings.cors import *  # noqa
 from config.settings.sessions import *  # noqa
+from config.settings.celery import *  # noqa
 from config.settings.swagger import *  # noqa
+from config.settings.email_sending import *  # noqa
 
 from config.settings.debug_toolbar.settings import *  # noqa
 from config.settings.debug_toolbar.setup import DebugToolbarSetup  # noqa

@@ -9,6 +9,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ['created_at']
     actions = []
     save_on_top = False
+    save_as_continue = False
 
     def has_add_permission(self, request):
         return False
