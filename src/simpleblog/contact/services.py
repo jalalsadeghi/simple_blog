@@ -19,8 +19,8 @@ def contact_create(*, email:str, name:str, content:str) -> QuerySet[Contact]:
         content = content,
     )
     send_mail(
-        subject='“Reply-to: '+email,
-        message=content,
+        subject=name,
+        message='name: '+name+'\n'+content+'\n'+'Reply-to: '+email,
         from_email=env('GMAIL_EMAIL_HOST_USER', default='noreply@simpleblog.com'),
         recipient_list=[env('EMAIL_SEND_TO_CONTACT', default='jalal.a.sadeghi@gmail.com')]
     )

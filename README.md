@@ -47,7 +47,9 @@
 
 1- create your env
 ```
+cd simple_blog/src
 cp .env.example .env
+cd ..
 ```
 
 2- spin off docker compose 

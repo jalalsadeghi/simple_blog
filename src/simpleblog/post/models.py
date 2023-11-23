@@ -12,7 +12,7 @@ class Article(BaseModel):
     slug = models.SlugField(max_length=255)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_online = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.title
