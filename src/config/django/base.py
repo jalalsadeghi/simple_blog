@@ -11,6 +11,8 @@ DEBUG = env.bool("DJANGO_DEBUG", default=True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
+ALLOWED_HTTP_VERSIONS = ['HTTP/1.1', 'HTTP/2']
+
 # Application definition
 LOCAL_APPS = [
     'simpleblog.core.apps.CoreConfig',

@@ -52,14 +52,9 @@ cp .env.example .env
 cd ..
 ```
 
-2- spin off docker compose 
-
-   - develop environment
+2- spin off docker compose
 ```
 docker-compose -f docker-compose.yml up
 ```
-   - production environment
-```
-docker-compose -f docker-compose.prod.yml up
-```
+
 
