@@ -1,7 +1,6 @@
 from simpleblog.contact.models import Contact
 from config.env import env
 
-from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 
 from django.db import transaction
