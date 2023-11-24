@@ -1,5 +1,9 @@
 # Simple blog
- 
+
+## Architecture
+- This API is implemented using the Django framework and based on the [Django-Styleguide](https://github.com/HackSoftware/Django-Styleguide) structure
+- SQLite database 
+
 ## Models
 
 ### Blog article:
@@ -45,7 +49,7 @@
 
 ## project setup
 
-1- create your env
+1- Create your env
 ```
 cd simple_blog/src
 cp .env.example .env
@@ -55,9 +59,13 @@ cd ..
 ```
 EMAIL_SENDING_STRATEGY='gmail'   # gmail OR mailtrap
 ```
-3- spin off docker compose
+3- Spin off docker compose
 ```
 docker-compose -f docker-compose.yml up
 ```
 
-
+## pytest
+You can test the project with the code below
+```
+pytest . -rps
+```
