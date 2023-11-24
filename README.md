@@ -51,8 +51,11 @@ cd simple_blog/src
 cp .env.example .env
 cd ..
 ```
-
-2- spin off docker compose
+2- Do the email settings in the .env file
+```
+EMAIL_SENDING_STRATEGY='gmail'   # gmail OR mailtrap
+```
+3- spin off docker compose
 ```
 docker-compose -f docker-compose.yml up
 ```
