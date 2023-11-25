@@ -3,7 +3,6 @@ from django.db import transaction
 from django.utils.timezone import get_default_timezone_name
 
 from django_celery_beat.models import IntervalSchedule, CrontabSchedule, PeriodicTask
-from simpleblog.weather.tasks import weather_update as weather_update_task
 
 
 class Command(BaseCommand):
@@ -41,21 +40,7 @@ class Command(BaseCommand):
         },
         """
 
-        periodic_tasks_data = [
-            {
-                'task': weather_update_task,
-                'name': 'Periodic task description',
-                'cron': {
-                    'minute': '*',
-                    'hour': '*/2',
-                    'day_of_week': '*',
-                    'day_of_month': '*',
-                    'month_of_year': '*',
-                },
-                'enabled': True
-            },
-
-        ]
+        periodic_tasks_data = []
 
         timezone = get_default_timezone_name()
 
