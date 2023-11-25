@@ -22,7 +22,7 @@ class ArticleApi(APIView):
 
         class Meta:
             model = Article
-            fields = ("id", "title", "slug", "author", "url",)
+            fields = ("id", "title", "slug", "author", "created_at", "updated_at", "url")
 
         def get_author(self, post):
             return post.author.username
@@ -53,6 +53,7 @@ class ArticleApi(APIView):
             view=self,
         )
 
+
 class PostDetailApi(APIView):
 
     class OutPutPostDetailSerializer(serializers.ModelSerializer):
@@ -64,7 +65,6 @@ class PostDetailApi(APIView):
 
         def get_author(self, post):
             return post.author.username
-
 
     @extend_schema(
         responses=OutPutPostDetailSerializer,
